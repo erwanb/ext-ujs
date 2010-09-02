@@ -1,0 +1,15 @@
+* What version of Ext core I should use?
+
+You can use ext core v3.1.0.
+
+* Install testing requirements?
+
+> gem install bundler
+> bundle install
+
+* How do I run specs?
+
+> bundle exec ruby spec/server.rb
+
+Visit http://localhost:4567 and all the specs should pass. If you want to change any settings  then
+change the settings at the top of spec/public/spec/settings.js .

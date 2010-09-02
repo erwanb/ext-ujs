@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html id="html">
+  <head>
+    <title>extjs-ujs specs</title>
+    <link rel="stylesheet" type="text/css" href="/vendor/jasmine-1.0.0.rc1/jasmine.css">
+    <style> .fixture { text-indent: -9000em; } </style>
+    
+    <script type="text/javascript" src="/vendor/jasmine-1.0.0.rc1/jasmine.js"></script>
+    <script type="text/javascript" src="/vendor/jasmine-1.0.0.rc1/jasmine-html.js"></script>
+    <script type="text/javascript" src="/vendor/ext-core.js"></script>
+    <script type="text/javascript" src="/vendor/ext-fireevent.js"></script>
+    <script type="text/javascript" src="/vendor/rails.js"></script>
+
+    <script type="text/javascript" src="/spec/settings.js"></script>
+    <script type="text/javascript" src="/spec/data-confirm.js"></script>
+  </head>
+
+  <body id="body">
+    <script type="text/javascript">
+      Ext.onReady(function() {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+      });
+    </script>
+
+    <div id='fixtures' class='fixture'></div>
+  </body>
+</html>
