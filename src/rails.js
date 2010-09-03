@@ -49,6 +49,11 @@ Ext.onReady(function() {
   
   Ext.getBody().on("click", function(event, element) {
     Ext.get(element).callRemote();
-    event.stopEvent();
+    event.preventDefault();
   }, this, {delegate: ':any(a:not([data-confirm-cancel])|input:not([data-confirm-cancel]))[data-remote]'});
+  
+  Ext.getBody().on("submit", function(event, element) {
+    Ext.get(element).callRemote();
+    event.preventDefault();
+  }, this, {delegate: 'form[data-remote]'});
 });
