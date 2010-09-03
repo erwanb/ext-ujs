@@ -50,15 +50,18 @@ Ext.onReady(function() {
       event.stopEvent();
     }
   }, this, {delegate: ':any(a|input)[data-confirm]'});
-  
+
+  /**
+   * remote handlers
+   */
   Ext.getBody().on("click", function(event, element) {
-    Ext.get(element).callRemote();
     event.preventDefault();
+    Ext.get(element).callRemote();
   }, this, {delegate: ':any(a:not([data-confirm-cancel])|input:not([data-confirm-cancel]))[data-remote]'});
   
   Ext.getBody().on("submit", function(event, element) {
-    Ext.get(element).callRemote();
     event.preventDefault();
+    Ext.get(element).callRemote();
   }, this, {delegate: 'form[data-remote]'});
 
   /**
