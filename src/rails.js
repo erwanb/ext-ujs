@@ -36,7 +36,10 @@ Ext.onReady(function() {
       }
     }
   });
-
+  
+  /**
+   * confirmation handler
+   */
   Ext.getBody().on("click", function(event, element) {
     element = Ext.get(element);
     var message = element.getAttribute('data-confirm');
@@ -57,4 +60,27 @@ Ext.onReady(function() {
     Ext.get(element).callRemote();
     event.preventDefault();
   }, this, {delegate: 'form[data-remote]'});
+
+  /**
+   * disable-with handlers
+   */
+    
+  var disable_with_input_function = function(event, element) {
+    Ext.fly(element).select('input[data-disable-with]').each(function(input) {
+      input.set({'data-enable-with': input.getValue(),
+                 value             : input.getAttribute('data-disable-with'),
+                 disabled          : 'disabled'});
+    });
+  };
+  
+  Ext.getBody().on('submit', disable_with_input_function, this,
+                   {delegate: 'form:has(input[data-disable-with])'});
+
+  Ext.getBody().on('ajax:complete', function(event, element) {
+    Ext.fly(element).select('input[data-disable-with]').each(function(input) {
+      input.set({value             : input.getAttribute('data-enable-with'),
+                 'data-enable-with': null,
+                 disabled          : null});
+    });
+  }, this, {delegate: 'form:has(input[data-disable-with])'});
 });
