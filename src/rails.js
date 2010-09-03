@@ -28,6 +28,7 @@ Ext.onReady(function() {
           url: url,
           method: method.toUpperCase(),
           scope: this,
+          callback: function(options, success, response) {this.fireEvent("ajax:complete", response)},
           success: function(response) {this.fireEvent("ajax:success", response)},
           failure: function(response) {this.fireEvent("ajax:failure", response)}
         }));
