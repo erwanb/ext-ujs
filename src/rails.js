@@ -6,7 +6,7 @@ Ext.onReady(function() {
         var event = document.createEvent("HTMLEvents");
         event.initEvent(eventName, true, true); // event type,bubbling,cancelable
         event.data = options;
-        return !this.dom.dispatchEvent(event);
+        return this.dom.dispatchEvent(event);
       } else {
         // dispatch for IE
         var event = document.createEventObject();
@@ -22,7 +22,9 @@ Ext.onReady(function() {
       if (url === undefined) {
         throw "No URL specified for remote call (action or href must be present).";
       } else {
-        this.fireEvent("ajax:before");
+        if (!this.fireEvent("ajax:before")) {
+          return (false);
+        }
         var options = this.is('form') ? {form: this} : {};
         Ext.Ajax.request(Ext.apply(options, {
           url: url,
