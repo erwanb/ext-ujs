@@ -66,10 +66,30 @@ Ext.onReady(function() {
     Ext.get(element).callRemote();
   }, this, {delegate: 'form[data-remote]'});
 
+  Ext.getBody().on("click", function(event, element) {
+    var templateValues = {method: Ext.fly(element).getAttribute('data-method'),
+                          href  :  Ext.fly(element).getAttribute('href')};
+    var csrfParam      = Ext.select('meta[name=csrf-param]').item(0);
+    var csrfToken      = Ext.select('meta[name=csrf-token]').item(0);
+    var formTemplate   = ['<form style="display:none" method="post" action="{href}">',
+                        '<input name="_method" value="{method}" type="hidden" />',
+                        '</form>'];
+    var csrfTemplate   = '<input name="{csrfParam}" value="{csrfToken}" type="hidden" />';
+
+    if (csrfParam != null && csrfToken != null) {
+      formTemplate.splice(2, 0, csrfTemplate);
+      Ext.apply(templateValues, {csrfParam: csrfParam.getAttribute('content'),
+                                 csrfToken: csrfToken.getAttribute('content')});
+    }
+    
+    var template = new Ext.Template(formTemplate);
+    var form = template.append(Ext.getBody(), templateValues);
+    form.submit();
+  }, this, {delegate: 'a[data-method]:not([data-remote])'});
+
   /**
    * disable-with handlers
-   */
-    
+   */    
   var disable_with_input_function = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
       input.set({'data-enable-with': input.getValue(),
