@@ -1,4 +1,4 @@
-Ext.onReady(function() {
+(function() {
   Ext.override(Ext.Element, {
     fireEvent: function(eventName, options) {
       if (document.createEvent) {
@@ -108,4 +108,4 @@ Ext.onReady(function() {
                  disabled          : null});
     });
   }, this, {delegate: 'form:has(input[data-disable-with])'});
-});
+})();
