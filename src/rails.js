@@ -80,17 +80,16 @@
 
   var disableWithInput = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
-      input.set({'data-enable-with': input.getValue(),
-                 value             : input.getAttribute('data-disable-with'),
-                 disabled          : 'disabled'});
+      input.set({'enable-with': input.getValue()}, false);
+      input.set({value   : input.getAttribute('data-disable-with'),
+                 disabled: 'disabled'});
     });
   };
 
   var enableWithInput = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
-      input.set({value             : input.getAttribute('data-enable-with'),
-                 'data-enable-with': null,
-                 disabled          : null});
+      input.set({value   : input.getAttribute('enable-with'),                 
+                 disabled: null});
     });
   }
   
