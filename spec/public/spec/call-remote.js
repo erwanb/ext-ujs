@@ -227,7 +227,7 @@ describe('call-remote', function() {
 
     it("throws an exception", function() {
       form = Ext.select("form[data-remote]");
-      expect(form.fireEvent.createCallback('submit')).toThrow("this.invoke is not a function");
+      expect(form.fireEvent.createCallback('submit')).toThrow();
     });
   });
 });

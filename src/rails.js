@@ -71,6 +71,7 @@
         event.preventDefault();
         element.callRemote();
       } else if (dataMethod) {
+        event.preventDefault();
         sendWithDataMethod(element);
       }
     } else {
@@ -88,8 +89,8 @@
 
   var enableWithInput = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
-      input.set({value   : input.getAttribute('enable-with'),                 
-                 disabled: null});
+      input.set({value: input.getAttribute('enable-with')});
+      input.set({disabled: false}, false);
     });
   }
   
