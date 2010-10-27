@@ -99,6 +99,10 @@
                    {delegate: 'input:any([data-confirm]|[data-remote])'});
   Ext.getBody().on("submit", onClick, this,
                    {delegate: 'form[data-remote]'});
+  Ext.getBody().on('ajax:before', disableWithInput, this,
+                   {delegate: 'form[data-remote]:has(input[data-disable-with])'});
+  // selector should be form:not([data-remote]):has(input[data-disable-with])
+  // but pseudo selectors chaining does not seem to work 
   Ext.getBody().on('submit', disableWithInput, this,
                    {delegate: 'form:has(input[data-disable-with])'});
   Ext.getBody().on('ajax:complete', enableWithInput, this,

@@ -32,7 +32,7 @@ describe('data-disable', function() {
       expect(Ext.select('input[disabled]').getCount()).toEqual(0);
 	    expect(Ext.fly('user_name').getValue()).toEqual('john');
       
-	    Ext.select('form').fireEvent('submit');
+	    Ext.select('form').fireEvent('ajax:before');
       
       expect(Ext.select('input[disabled]').getCount()).toEqual(1);
 	    expect(Ext.select('input[disabled]').item(0).getValue()).toEqual('processing ...');
