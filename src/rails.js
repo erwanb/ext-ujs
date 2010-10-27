@@ -78,7 +78,7 @@
     }
   }
 
-  var disableWithInputFunction = function(event, element) {
+  var disableWithInput = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
       input.set({'data-enable-with': input.getValue(),
                  value             : input.getAttribute('data-disable-with'),
@@ -86,7 +86,7 @@
     });
   };
 
-  var enableWithInputFunction = function(event, element) {
+  var enableWithInput = function(event, element) {
     Ext.fly(element).select('input[data-disable-with]').each(function(input) {
       input.set({value             : input.getAttribute('data-enable-with'),
                  'data-enable-with': null,
@@ -100,8 +100,8 @@
                    {delegate: 'input:any([data-confirm]|[data-remote])'});
   Ext.getBody().on("submit", onClick, this,
                    {delegate: 'form[data-remote]'});
-  Ext.getBody().on('submit', disableWithInputFunction, this,
+  Ext.getBody().on('submit', disableWithInput, this,
                    {delegate: 'form:has(input[data-disable-with])'});
-  Ext.getBody().on('ajax:complete', enableWithInputFunction, this,
+  Ext.getBody().on('ajax:complete', enableWithInput, this,
                    {delegate: 'form:has(input[data-disable-with])'});
 })();
