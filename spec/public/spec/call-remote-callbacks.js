@@ -1,30 +1,9 @@
-var App = App || {};
-
-App.build_form = function(opt) {
-	var defaults = {
-    tag          : 'form', 
-		'data-remote': 'true',
-    cn           : {
-      tag  : 'input',
-      id   : 'user_name',
-		  type : 'text',
-		  size : '30',
-		  name : 'user_name',
-		  value: 'john'
-    }
-	};
-
-	var options = Ext.apply(defaults, opt);
-
-  Ext.DomHelper.append(Ext.get('fixtures'), options);
-};
-
 describe('call-remote', function() {
   var fixtures;
 
   beforeEach(function() {
     fixtures = Ext.get('fixtures');
-    App.build_form({
+    App.buildForm({
 			'action': App.url('show')
 		});
   });

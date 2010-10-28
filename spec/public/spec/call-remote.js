@@ -1,24 +1,3 @@
-var App = App || {};
-
-App.build_form = function(opt) {
-	var defaults = {
-    tag          : 'form', 
-		'data-remote': 'true',
-    cn           : {
-      tag  : 'input',
-      id   : 'user_name',
-		  type : 'text',
-		  size : '30',
-		  name : 'user_name',
-		  value: 'john'
-    }
-	};
-
-	var options = Ext.apply(defaults, opt);
-
-  Ext.DomHelper.append(Ext.get('fixtures'), options);
-};
-
 describe('call-remote', function() {
   var fixtures;
 
@@ -32,7 +11,7 @@ describe('call-remote', function() {
 
   describe("when method attribute is present", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'method'     : 'post',
         'data-method': 'get',
         'action'     : App.url('update')
@@ -65,7 +44,7 @@ describe('call-remote', function() {
 
   describe("when method attribute is missing", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'data-method': 'post',
         'action'     : App.url('update')
       });
@@ -97,7 +76,7 @@ describe('call-remote', function() {
 
   describe("when both method ant data-method attributes are missing", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'action': App.url('show')
       });
     });
@@ -128,7 +107,7 @@ describe('call-remote', function() {
 
   describe("When action attribute is present", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'action': App.url('show')
       });
     });
@@ -159,7 +138,7 @@ describe('call-remote', function() {
 
   describe("When both action and href attributes are present", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'action': App.url('show'),
         'href'  : 'http://example.org'
       });
@@ -191,7 +170,7 @@ describe('call-remote', function() {
 
   describe("When action attribute is missing and href attribute is present", function() {
     beforeEach(function() {
-      App.build_form({
+      App.buildForm({
         'href': App.url('show')
       });
     });
@@ -222,7 +201,7 @@ describe('call-remote', function() {
 
   describe("When both action and href attributes are missing", function() {
     beforeEach(function() {
-      App.build_form({});
+      App.buildForm({});
     });
 
     it("throws an exception", function() {

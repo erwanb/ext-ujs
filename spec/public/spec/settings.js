@@ -11,6 +11,24 @@ var App = function() {
 
     url: function(url) {
       return (base_url + '/' + url);
+    },
+
+    buildForm: function(opt) {
+	    var defaults = {
+        tag          : 'form', 
+		    'data-remote': 'true',
+        cn           : {
+          tag  : 'input',
+          id   : 'user_name',
+		      type : 'text',
+		      size : '30',
+		      name : 'user_name',
+		      value: 'john'
+        }
+	    };
+      
+	    var options = Ext.apply(defaults, opt);
+      Ext.DomHelper.append(Ext.get('fixtures'), options);
     }
   });
 }();
