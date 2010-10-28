@@ -18,28 +18,7 @@ describe('call-remote', function() {
       });
     });
 
-    it("pick method from method attribute and not from data-method", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-         
-          expect(request_env['REQUEST_METHOD']).toEqual('POST');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });        
+    it("pick method from method attribute and not from data-method", submitFormAndExpectMethod.createCallback('POST'));
   });
 
   describe("when method attribute is missing", function() {
@@ -50,28 +29,7 @@ describe('call-remote', function() {
       });
     });
 
-    it("pick method from method attribute and not from data-method", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-         
-          expect(request_env['REQUEST_METHOD']).toEqual('POST');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });        
+    it("pick method from method attribute and not from data-method", submitFormAndExpectMethod.createCallback('POST'));
   });
 
   describe("when both method ant data-method attributes are missing", function() {
@@ -81,59 +39,15 @@ describe('call-remote', function() {
       });
     });
 
-    it("fallback to GET method", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-         
-          expect(request_env['REQUEST_METHOD']).toEqual('GET');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });        
+    it("fallback to GET method", submitFormAndExpectMethod.createCallback('GET'));
   });
 
   describe("When action attribute is present", function() {
     beforeEach(function() {
-      App.buildForm({
-        'action': App.url('show')
-      });
+      App.buildForm({'action': App.url('show')});
     });
-
-    it("pick url from action attribute", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-
-          expect(request_env['PATH_INFO']).toEqual('/show');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });
+    
+    it("pick url from action attribute", submitFormAndExpectUrl);      
   });
 
   describe("When both action and href attributes are present", function() {
@@ -144,59 +58,15 @@ describe('call-remote', function() {
       });
     });
 
-    it("pick url from action attribute", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-
-          expect(request_env['PATH_INFO']).toEqual('/show');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });
+    it("pick url from action attribute", submitFormAndExpectUrl);
   });
 
   describe("When action attribute is missing and href attribute is present", function() {
     beforeEach(function() {
-      App.buildForm({
-        'href': App.url('show')
-      });
+      App.buildForm({'href': App.url('show')});
     });
-
-    it("pick url from href attribute", function() {
-      var callback = {
-        onAjaxSuccessCalled: false,
-        onAjaxSuccess : function(event) { 
-          var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
-
-          expect(request_env['PATH_INFO']).toEqual('/show');
-          callback.onAjaxSuccessCalled = true;
-        }
-      };
-      spyOn(callback, 'onAjaxSuccess').andCallThrough();
-      
-      runs(function() {
-        form = Ext.select("form[data-remote]");
-        form.on('ajax:success', callback.onAjaxSuccess);
-        form.fireEvent('submit');
-      });
-      waitsFor(function() {return(callback.onAjaxSuccessCalled)});
-      runs(function() {
-        expect(callback.onAjaxSuccess).toHaveBeenCalled();
-      });
-    });
+    
+    it("pick url from href attribute", submitFormAndExpectUrl);
   });
 
   describe("When both action and href attributes are missing", function() {
@@ -210,3 +80,49 @@ describe('call-remote', function() {
     });
   });
 });
+
+function submitFormAndExpectMethod(expectedMethod) {
+  var callback = {
+    onAjaxSuccessCalled: false,
+    onAjaxSuccess : function(event) { 
+      var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
+      
+      expect(request_env['REQUEST_METHOD']).toEqual(expectedMethod);
+      callback.onAjaxSuccessCalled = true;
+    }
+  };
+  spyOn(callback, 'onAjaxSuccess').andCallThrough();
+  
+  runs(function() {
+    form = Ext.select("form[data-remote]");
+    form.on('ajax:success', callback.onAjaxSuccess);
+    form.fireEvent('submit');
+  });
+  waitsFor(function() {return(callback.onAjaxSuccessCalled)});
+  runs(function() {
+    expect(callback.onAjaxSuccess).toHaveBeenCalled();
+  });
+}
+
+function submitFormAndExpectUrl() {
+  var callback = {
+    onAjaxSuccessCalled: false,
+    onAjaxSuccess : function(event) { 
+      var request_env = Ext.decode(event.browserEvent.data.responseText)['request_env'];
+      
+      expect(request_env['PATH_INFO']).toEqual('/show');
+      callback.onAjaxSuccessCalled = true;
+    }
+  };
+  spyOn(callback, 'onAjaxSuccess').andCallThrough();
+  
+  runs(function() {
+    form = Ext.select("form[data-remote]");
+    form.on('ajax:success', callback.onAjaxSuccess);
+    form.fireEvent('submit');
+  });
+  waitsFor(function() {return(callback.onAjaxSuccessCalled)});
+  runs(function() {
+    expect(callback.onAjaxSuccess).toHaveBeenCalled();
+  });
+}
