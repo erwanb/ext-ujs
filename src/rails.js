@@ -8,10 +8,10 @@
         event.data = options;
         return this.dom.dispatchEvent(event);
       } else {
-        // dispatch for IE
-        var event = document.createEventObject();
-        event.data = options;
-        return this.dom.fireEvent('on' + eventName, event);
+        // IE does not support custom events
+        // One way to do it : http://dean.edwards.name/weblog/2009/03/callbacks-vs-events/
+        // but Element.addListener would have to support it
+        throw "Your browser is not W3C compliant."
       }
     },
     
