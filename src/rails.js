@@ -39,73 +39,75 @@
     }
   });
 
-  var sendWithDataMethod = function(element) {
-    var templateValues = {method: element.getAttribute('data-method'),
-                          href  : element.getAttribute('href')};
-    var csrfParam      = Ext.select('meta[name=csrf-param]').item(0);
-    var csrfToken      = Ext.select('meta[name=csrf-token]').item(0);
-    var formTemplate   = ['<form style="display:none" method="post" action="{href}">',
-                          '<input name="_method" value="{method}" type="hidden" />',
-                          '</form>'];
-    var csrfTemplate   = '<input name="{csrfParam}" value="{csrfToken}" type="hidden" />';
+  Ext.rails = {
+    sendWithDataMethod: function(element) {
+      var templateValues = {method: element.getAttribute('data-method'),
+                            href  : element.getAttribute('href')};
+      var csrfParam      = Ext.select('meta[name=csrf-param]').item(0);
+      var csrfToken      = Ext.select('meta[name=csrf-token]').item(0);
+      var formTemplate   = ['<form style="display:none" method="post" action="{href}">',
+                            '<input name="_method" value="{method}" type="hidden" />',
+                            '</form>'];
+      var csrfTemplate   = '<input name="{csrfParam}" value="{csrfToken}" type="hidden" />';
 
-    if (csrfParam != null && csrfToken != null) {
-      formTemplate.splice(2, 0, csrfTemplate);
-      Ext.apply(templateValues, {csrfParam: csrfParam.getAttribute('content'),
-                                 csrfToken: csrfToken.getAttribute('content')});
-    }
-    
-    var template = new Ext.Template(formTemplate);
-    var form = template.append(Ext.getBody(), templateValues);
-    form.submit();
-  } 
-
-  var onClick = function(event, element) {
-    var element     = Ext.get(element);
-    var dataConfirm = element.getAttribute('data-confirm');
-    var dataRemote  = element.getAttribute('data-remote');
-    var dataMethod  = element.getAttribute('data-method');
-
-    if (!dataConfirm || confirm(dataConfirm)) {
-      if (dataRemote) {
-        event.preventDefault();
-        element.callRemote();
-      } else if (dataMethod) {
-        event.preventDefault();
-        sendWithDataMethod(element);
+      if (csrfParam != null && csrfToken != null) {
+        formTemplate.splice(2, 0, csrfTemplate);
+        Ext.apply(templateValues, {csrfParam: csrfParam.getAttribute('content'),
+                                   csrfToken: csrfToken.getAttribute('content')});
       }
-    } else {
-      event.stopEvent();
+      
+      var template = new Ext.Template(formTemplate);
+      var form = template.append(Ext.getBody(), templateValues);
+      form.submit();
+    },
+
+    onClick: function(event, element) {
+      var element     = Ext.get(element);
+      var dataConfirm = element.getAttribute('data-confirm');
+      var dataRemote  = element.getAttribute('data-remote');
+      var dataMethod  = element.getAttribute('data-method');
+
+      if (!dataConfirm || confirm(dataConfirm)) {
+        if (dataRemote) {
+          event.preventDefault();
+          element.callRemote();
+        } else if (dataMethod) {
+          event.preventDefault();
+          Ext.rails.sendWithDataMethod(element);
+        }
+      } else {
+        event.stopEvent();
+      }
+    },
+
+    disableWithInput: function(event, element) {
+      Ext.fly(element).select('input[data-disable-with]').each(function(input) {
+        input.set({'enable-with': input.getValue()}, false);
+        input.set({value   : input.getAttribute('data-disable-with'),
+                   disabled: 'disabled'});
+      });
+    },
+
+    enableWithInput: function(event, element) {
+      Ext.fly(element).select('input[data-disable-with]').each(function(input) {
+        input.set({value: input.getAttribute('enable-with')});
+        input.set({disabled: false}, false);
+      });
     }
-  }
-
-  var disableWithInput = function(event, element) {
-    Ext.fly(element).select('input[data-disable-with]').each(function(input) {
-      input.set({'enable-with': input.getValue()}, false);
-      input.set({value   : input.getAttribute('data-disable-with'),
-                 disabled: 'disabled'});
-    });
-  };
-
-  var enableWithInput = function(event, element) {
-    Ext.fly(element).select('input[data-disable-with]').each(function(input) {
-      input.set({value: input.getAttribute('enable-with')});
-      input.set({disabled: false}, false);
-    });
   }
   
-  Ext.getBody().on("click", onClick, this,
+  Ext.getBody().on("click", Ext.rails.onClick, this,
                    {delegate: 'a:any([data-confirm]|[data-remote]|[data-method])'});
-  Ext.getBody().on("click", onClick, this,
+  Ext.getBody().on("click", Ext.rails.onClick, this,
                    {delegate: 'input:any([data-confirm]|[data-remote])'});
-  Ext.getBody().on("submit", onClick, this,
+  Ext.getBody().on("submit", Ext.rails.onClick, this,
                    {delegate: 'form[data-remote]'});
-  Ext.getBody().on('ajax:before', disableWithInput, this,
+  Ext.getBody().on('ajax:before', Ext.rails.disableWithInput, this,
                    {delegate: 'form[data-remote]:has(input[data-disable-with])'});
   // selector should be form:not([data-remote]):has(input[data-disable-with])
   // but pseudo selectors chaining does not seem to work 
-  Ext.getBody().on('submit', disableWithInput, this,
+  Ext.getBody().on('submit', Ext.rails.disableWithInput, this,
                    {delegate: 'form:has(input[data-disable-with])'});
-  Ext.getBody().on('ajax:complete', enableWithInput, this,
+  Ext.getBody().on('ajax:complete', Ext.rails.enableWithInput, this,
                    {delegate: 'form:has(input[data-disable-with])'});
 })();
