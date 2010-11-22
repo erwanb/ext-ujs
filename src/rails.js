@@ -11,7 +11,7 @@
         // IE does not support custom events
         // One way to do it : http://dean.edwards.name/weblog/2009/03/callbacks-vs-events/
         // but Element.addListener would have to support it
-        throw "Your browser is not W3C compliant."
+        throw "Your browser does not support standard DOM events."
       }
     },
     
