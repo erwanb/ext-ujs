@@ -1,0 +1,26 @@
+= ext-ujs
+
+Unobtrusive ext-core with Rails 3
+
+== What version of Ext core I should use?
+
+You can use ext core v3.1.0.
+
+== Caveat
+
+This driver does not work with Internet Explorer.
+We trigger custom DOM events, and Internet Explorer doesn't have a standard DOM event implementation needed to send thoses events.
+Ext-core would have to support custom pseudo DOM events (with propertychange event).
+There is a feature request for that but it seems abandoned: http://www.sencha.com/forum/showthread.php?69272-Feature-Request-Ext.Element.fireEvent%28%29
+
+== Install testing requirements?
+
+> gem install bundler
+> bundle install
+
+== How do I run specs?
+
+> bundle exec ruby spec/server.rb
+
+Visit http://localhost:4567 and all the specs should pass. If you want to change any settings  then
+change the settings at the top of spec/public/spec/settings.js .
