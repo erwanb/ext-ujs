@@ -10,7 +10,7 @@ You can use ext core v3.1.0.
 
 This driver does not work with Internet Explorer.
 
-We trigger custom DOM events, and Internet Explorer doesn't have a standard DOM event implementation needed to send thoses events.
+We trigger custom DOM events, and Internet Explorer doesn't have a standard DOM event implementation needed to send those events.
 Ext-core would have to support custom pseudo DOM events (with propertychange event).
 
 There is a feature request for that but it seems abandoned: http://www.sencha.com/forum/showthread.php?69272-Feature-Request-Ext.Element.fireEvent%28%29
