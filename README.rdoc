@@ -4,16 +4,12 @@ Unobtrusive ext-core with Rails 3
 
 == What version of Ext core I should use?
 
-You can use ext core v3.1.0.
+You can use ext core v3.1.0 or extjs v4.0-pr1.
 
-== Caveat
+== Browser compatibility
 
-This driver does not work with Internet Explorer.
-
-We trigger custom DOM events, and Internet Explorer doesn't have a standard DOM event implementation needed to send those events.
-Ext-core would have to support custom pseudo DOM events (with propertychange event).
-
-There is a feature request for that but it seems abandoned: http://www.sencha.com/forum/showthread.php?69272-Feature-Request-Ext.Element.fireEvent%28%29
+ext-ujs supports Firefox/Chrome/Opera.
+IE9 RC is supported only with extjs v4.0-pr1.
 
 == Install testing requirements?
 
