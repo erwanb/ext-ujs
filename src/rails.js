@@ -16,19 +16,27 @@
     },
     
     callRemote: function() {
-      var method = this.getAttribute('method') || this.getAttribute('data-method') || 'GET';
-      var url    = this.getAttribute('action') || this.getAttribute('href');
-
+      var method;
+      var url     = this.getAttribute('action') || this.getAttribute('href');
+      var options = {};
+      
       if (url === undefined) {
         throw "No URL specified for remote call (action or href must be present).";
       } else {
         if (!this.fireEvent("ajax:before")) {
           return (false);
         }
-        var options = this.is('form') ? {form: this} : {};
+
+        if (this.is('form')) {
+          options = {form: this};
+          method = this.getAttribute('method')
+        } else {
+          method  = this.getAttribute('data-method');
+        }
+
         Ext.Ajax.request(Ext.apply(options, {
           url: url,
-          method: method.toUpperCase(),
+          method: method || "GET",
           scope: this,
           callback: function(options, success, response) {this.fireEvent("ajax:complete", response)},
           success: function(response) {this.fireEvent("ajax:success", response)},

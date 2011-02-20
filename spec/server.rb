@@ -29,12 +29,14 @@ get '/error' do
   status 403
 end
 
-post '/update' do
-  if request.xhr?
-    {:hello => :sexy, :request_env => request.env}.to_json
-  else
-    '/update requested without ajax'
-  end
+[:get, :post].each do |method|
+  send(method, '/update') {
+    if request.xhr?
+      {:hello => :sexy, :request_env => request.env}.to_json
+    else
+      '/update requested without ajax'
+    end
+  }
 end
 
 get '/iframe' do
