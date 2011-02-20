@@ -1,5 +1,5 @@
 Ext.onReady(function() {
-  Ext.DomHelper.append(Ext.get('fixtures-iframe'), {
+  Ext.core.DomHelper.append(Ext.get('fixtures-iframe'), {
     tag          : 'a',
     href         : App.url('delete'),
     'data-method': 'delete',

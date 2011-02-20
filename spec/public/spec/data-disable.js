@@ -11,7 +11,7 @@ describe('data-disable', function() {
 
   describe('When triggering ajax callbacks on a form with data-disable attribute', function() {
     beforeEach(function() {
-      Ext.DomHelper.append(fixtures, {
+      Ext.core.DomHelper.append(fixtures, {
         tag           : 'form',
         'data-remote' : 'true',
         method        : 'post',
@@ -46,7 +46,7 @@ describe('data-disable', function() {
 
   describe('When clicking on non-ajax Submit input tag with data-disable-with attribute', function() {
     beforeEach(function() {
-      Ext.DomHelper.append(fixtures, {
+      Ext.core.DomHelper.append(fixtures, {
         tag   : 'form',
         method: 'post',
         action: App.url('update'),

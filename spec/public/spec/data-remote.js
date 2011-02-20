@@ -11,7 +11,7 @@ describe('data-remote', function() {
 
   describe("With a 'a' tag", function() {
     beforeEach(function() {
-      Ext.DomHelper.append(fixtures, {
+      Ext.core.DomHelper.append(fixtures, {
         tag           : 'a',
         href          : App.url('show'),
         'data-remote' : 'true',
@@ -45,7 +45,7 @@ describe('data-remote', function() {
 
   describe("With a 'input' tag", function() {
     beforeEach(function() {
-      Ext.DomHelper.append(fixtures, {
+      Ext.core.DomHelper.append(fixtures, {
         tag           : 'input',
         href          : App.url('show'),
         'data-remote' : 'true',
@@ -81,7 +81,7 @@ describe('data-remote', function() {
 
   describe("With a form", function() {
     beforeEach(function() {
-      Ext.DomHelper.append(fixtures, {
+      Ext.core.DomHelper.append(fixtures, {
         tag           : 'form',
         'data-remote' : 'true',
         method        : 'post',

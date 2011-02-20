@@ -1,5 +1,5 @@
 (function() {
-  Ext.override(Ext.Element, {
+  Ext.override(Ext.core === undefined ? Ext.Element : Ext.core.Element, {
     fireEvent: function(eventName, options) {
       if (document.createEvent) {
         // dispatch for firefox + others
@@ -96,18 +96,20 @@
     }
   }
   
-  Ext.getBody().on("click", Ext.rails.onClick, this,
-                   {delegate: 'a:any([data-confirm]|[data-remote]|[data-method])'});
-  Ext.getBody().on("click", Ext.rails.onClick, this,
-                   {delegate: 'input:any([data-confirm]|[data-remote])'});
-  Ext.getBody().on("submit", Ext.rails.onClick, this,
-                   {delegate: 'form[data-remote]'});
-  Ext.getBody().on('ajax:before', Ext.rails.disableWithInput, this,
-                   {delegate: 'form[data-remote]:has(input[data-disable-with])'});
-  // selector should be form:not([data-remote]):has(input[data-disable-with])
-  // but pseudo selectors chaining does not seem to work 
-  Ext.getBody().on('submit', Ext.rails.disableWithInput, this,
-                   {delegate: 'form:has(input[data-disable-with])'});
-  Ext.getBody().on('ajax:complete', Ext.rails.enableWithInput, this,
-                   {delegate: 'form:has(input[data-disable-with])'});
+  Ext.onReady(function() {
+    Ext.getBody().on("click", Ext.rails.onClick, this,
+                     {delegate: 'a:any([data-confirm]|[data-remote]|[data-method])'});
+    Ext.getBody().on("click", Ext.rails.onClick, this,
+                     {delegate: 'input:any([data-confirm]|[data-remote])'});
+    Ext.getBody().on("submit", Ext.rails.onClick, this,
+                     {delegate: 'form[data-remote]'});
+    Ext.getBody().on('ajax:before', Ext.rails.disableWithInput, this,
+                     {delegate: 'form[data-remote]:has(input[data-disable-with])'});
+    // selector should be form:not([data-remote]):has(input[data-disable-with])
+    // but pseudo selectors chaining does not seem to work 
+    Ext.getBody().on('submit', Ext.rails.disableWithInput, this,
+                     {delegate: 'form:has(input[data-disable-with])'});
+    Ext.getBody().on('ajax:complete', Ext.rails.enableWithInput, this,
+                     {delegate: 'form:has(input[data-disable-with])'});
+  });
 })();

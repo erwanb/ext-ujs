@@ -28,7 +28,7 @@ var App = function() {
 	    };
       
 	    var options = Ext.apply(defaults, opt);
-      Ext.DomHelper.append(Ext.get('fixtures'), options);
+      Ext.core.DomHelper.append(Ext.get('fixtures'), options);
     }
   });
 }();
